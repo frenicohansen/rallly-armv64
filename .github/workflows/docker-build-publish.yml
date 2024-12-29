@@ -1,0 +1,36 @@
+name: docker-build-publish
+on: [push]
+
+jobs:
+  publish-rallly-arm64:
+    runs-on: ubuntu-latest
+    env:
+      RALLLY_VERSION: 'v3.11.2'
+
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v3
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+        with:
+          platforms: 'arm64'
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          platforms: linux/arm64
+          push: true
+          tags: ghcr.io/${{ github.repository_owner }}/rallly:$RALLLY_VERSION
+          build-args: |
+            RALLLY_VERSION="$RALLLY_VERSION"
