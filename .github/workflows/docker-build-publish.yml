@@ -31,6 +31,6 @@ jobs:
         with:
           platforms: linux/arm64
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/rallly:$RALLLY_VERSION
+          tags: ghcr.io/${{ github.repository_owner }}/rallly:${{ env.RALLLY_VERSION }}
           build-args: |
-            RALLLY_VERSION="$RALLLY_VERSION"
+            RALLLY_VERSION=${{ env.RALLLY_VERSION }}
