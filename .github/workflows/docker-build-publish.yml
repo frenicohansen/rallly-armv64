@@ -6,7 +6,9 @@ jobs:
     runs-on: ubuntu-latest
     env:
       RALLLY_VERSION: 'v3.11.2'
-
+    permissions:
+      contents: read
+      packages: write
     steps:
       - name: Checkout the code
         uses: actions/checkout@v3
@@ -20,7 +22,7 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@v1
+        uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
