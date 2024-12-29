@@ -1,6 +1,5 @@
-ARG RALLLY_VERSION="v3.11.2"
-
 FROM node:20 AS builder
+ARG RALLLY_VERSION="v3.11.2"
 
 WORKDIR /app
 RUN apt-get update && apt-get install -y wget
