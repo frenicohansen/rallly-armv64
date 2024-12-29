@@ -15,14 +15,14 @@ RUN turbo prune --scope=@rallly/web --docker
 FROM node:20 AS installer
 
 WORKDIR /app
-COPY .gitignore .gitignore
+COPY --from=builder /app/.gitignore .gitignore
 COPY --from=builder /app/out/json/ .
 COPY --from=builder /app/out/yarn.lock ./yarn.lock
 RUN yarn --network-timeout 1000000
 
 # Build the project
 COPY --from=builder /app/out/full/ .
-COPY turbo.json turbo.json
+COPY --from=builder /app/turbo.json turbo.json
 RUN yarn db:generate
 
 ARG APP_VERSION
