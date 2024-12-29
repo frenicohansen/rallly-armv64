@@ -1,14 +1,14 @@
 FROM node:20 AS builder
-ARG RALLLY_VERSION="v3.11.2"
+ARG APP_VERSION
 
 WORKDIR /app
 RUN apt-get update && apt-get install -y wget
 RUN yarn global add turbo
 
-RUN wget https://github.com/lukevella/rallly/archive/refs/tags/${RALLLY_VERSION}.tar.gz \
-  && tar xzf ${RALLLY_VERSION}.tar.gz \
-  && mv rallly-*/* . \
-  && rm -rf rallly-* ${RALLLY_VERSION}.tar.gz
+RUN wget https://github.com/lukevella/rallly/archive/refs/tags/${APP_VERSION}.tar.gz \
+  && tar xzf ${APP_VERSION}.tar.gz \
+  && mv rallly-*/.* rallly-*/* . 2>/dev/null || true \
+  && rm -rf rallly-* ${APP_VERSION}.tar.gz
 RUN turbo prune --scope=@rallly/web --docker
 
 FROM node:20 AS installer

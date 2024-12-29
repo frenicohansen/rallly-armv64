@@ -33,4 +33,5 @@ jobs:
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/rallly:${{ env.RALLLY_VERSION }}
           build-args: |
-            RALLLY_VERSION=${{ env.RALLLY_VERSION }}
+            APP_VERSION=${{ env.RALLLY_VERSION }}
+            SELF_HOSTED=true
