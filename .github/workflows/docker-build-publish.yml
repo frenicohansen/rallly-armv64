@@ -15,8 +15,6 @@ jobs:
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
-        with:
-          platforms: 'arm64'
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -31,7 +29,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
-          platforms: linux/arm64
+          platforms: linux/amd64,linux/arm64
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/rallly:${{ env.RALLLY_VERSION }}
           build-args: |
